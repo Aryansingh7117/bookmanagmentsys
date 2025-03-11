@@ -90,59 +90,45 @@ class Library:
         member_1 = Member(name,member_id)
         self.members[member_id]= member_1
         print(f"'{name}' is add to our system with member_id {member_id} .")
+    
+    def find_book(self,isbn_or_title):
+        
+        if isbn_or_title in self.books:
+            book = self.books[isbn_or_title]
+            print(f'Book found: {book.title} by {book.author} (isbn {book.isbn})')
+            return book 
+        
+        for book in self.books.values():
+            if book.title.lower() == isbn_or_title.lower():
+                print(f"Book found: '{book.title}' by {book.author} (ISBN: {book.isbn})")
+            return book
+        
+        print("Book not found.")
+        return None
+    
+    def display_book(self, identifier=None):
+        if not self.books:
+            print("No books available in the library.")
+            return
 
+        if identifier is None:
+            print("\n📚 List of Books:")
+            for book in self.books.values():
+                print(book.display_info())  # Assuming `Book` class has `display_info()`
+        
+        else:
+            if identifier in self.books:
+                print("\n📖 Book Found:")
+                print(self.books[identifier].display_info())
+                return
+            
+            for book in self.books.values():
+                if book.title.lower() == identifier.lower():
+                    print("\n📖 Book Found:")
+                    print(book.display_info())
+                    return
+            
+            print("❌ Book not found.")
 
         
         
-
-
-
-
-
-
-
-
-# 🟢 Create Book instances
-book1 = Book("Python Basics", "John Doe", 12345)
-book2 = Book("Data Science", "Jane Smith", 67890)
-
-# 🟢 Create Member instance
-member1 = Member("Aryan", 101)
-
-# 🔹 Test 1: View borrowed books before borrowing (should be empty)
-print("\n📌 Test 1: View Borrowed Books Before Borrowing")
-member1.view_borrowed_book()  # Expected: No books borrowed
-
-# 🔹 Test 2: Borrow a book (should succeed)
-print("\n📌 Test 2: Borrowing a Book")
-member1.borrow_book(book1)  
-# Expected: Aryan has borrowed 'Python Basics'
-
-# 🔹 Test 3: Try borrowing the same book again (should fail)
-print("\n📌 Test 3: Borrowing the same book again")
-member1.borrow_book(book1)  
-# Expected: 'Python Basics' has already been issued.
-
-# 🔹 Test 4: Borrow another book (should succeed)
-print("\n📌 Test 4: Borrow another book")
-member1.borrow_book(book2)  
-# Expected: Aryan has borrowed 'Data Science'
-
-# 🔹 Test 5: View borrowed books after borrowing (should list both books)
-print("\n📌 Test 5: View Borrowed Books After Borrowing")
-member1.view_borrowed_book()  
-# Expected: Python Basics & Data Science should be listed
-
-# 🔹 Test 6: Return a book (should succeed)
-print("\n📌 Test 6: Returning a Book")
-member1.return_book(book1)  
-# Expected: 'Python Basics' has been returned by Aryan
-
-# 🔹 Test 7: Return the same book again (should fail)
-print("\n📌 Test 7: Returning the same book again")
-member1.return_book(book1)  
-# Expected: Aryan never borrowed 'Python Basics' (because it was already returned)
-
-# 🔹 Test 8: View borrowed books after returning (should only show Data Science)
-print("\n📌 Test 8: View Borrowed Books After Returning")
-member1.view_borrowed_book()  
