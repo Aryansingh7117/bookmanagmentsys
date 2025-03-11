@@ -60,8 +60,40 @@ class Member:
 
 
 class Library:
-    def add_book(self, title,author ,isbn : int):
-        self.
+    def __init__(self):
+        self.books = {}
+        self.members = {}
+
+    def add_book(self):
+        title = input("enter title of book")
+        author = input("enter author of book")
+        isbn = input("enter isbn of book")
+
+
+        if isbn in self.books:
+            print("book with same isbn already exists in our system")
+            return
+        
+        book_1 = Book(title, author,isbn)
+        self.books[isbn]= book_1
+        print(f"'{title}' by {author} added to the library.")
+
+    def add_member(self):
+        name = input("enter your name")
+        member_id = input("enter your member_id")
+
+
+        if member_id in self.members:
+            print("member_id already exists in our system")
+            return
+        
+        member_1 = Member(name,member_id)
+        self.members[member_id]= member_1
+        print(f"'{name}' is add to our system with member_id {member_id} .")
+
+
+        
+        
 
 
 
